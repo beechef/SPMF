@@ -38,7 +38,7 @@ public class MainTestCPTPlus {
 		// The following line is to set optional parameters for the prediction model. 
 		// We want to 
 		// activate the CCF and CBS strategies which generally improves its performance (see paper)
-		String optionalParameters = "CCF:true CBS:true CCFmin:3 CCFmax:6 CCFsup:2 splitMethod:0 splitLength:6 minPredictionRatio:0.5 noiseRatio:1.0";
+		String optionalParameters = "CCF:true CBS:true CCFmin:3 CCFmax:6 CCFsup:2 splitMethod:0 splitLength:20 minPredictionRatio:0.5 noiseRatio:1.0";
 		// Here is a brief description of the parameter used in the above line:
 		//  CCF:true  --> activate the CCF strategy 
 		//  CBS:true -->  activate the CBS strategy
