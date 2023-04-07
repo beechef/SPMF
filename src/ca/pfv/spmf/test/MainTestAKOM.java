@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 
+import ca.pfv.spmf.Converter.Converter;
 import ca.pfv.spmf.algorithms.sequenceprediction.ipredict.database.Item;
 import ca.pfv.spmf.algorithms.sequenceprediction.ipredict.database.Sequence;
 import ca.pfv.spmf.algorithms.sequenceprediction.ipredict.database.SequenceDatabase;
@@ -39,19 +40,23 @@ public class MainTestAKOM {
 
 		// Train the prediction model
 		MarkovAllKPredictor predictionModel = new MarkovAllKPredictor("AKOM", optionalParameters);
-		predictionModel.Train(trainingSet.getSequences());
+		var lines = Converter.readFile("C:\\Users\\1\\Desktop\\FIFA_TEST.txt");
+		var sequenceAndResults = Converter.linesToSequences(lines);
+
+		Converter.trainAndPredict(predictionModel, trainingSet.getSequences(),sequenceAndResults);
 		
 		// Now we will make a prediction.
 		// We want to predict what would occur after the sequence <1, 3>.
 		// We first create the sequence
-		Sequence sequence = new Sequence(0);
-		sequence.addItem(new Item(1));
-		sequence.addItem(new Item(4));
-		
-		// Then we perform the prediction
-		Sequence thePrediction = predictionModel.Predict(sequence);
-		System.out.println("For the sequence <(1),(4)>, the prediction for the next symbol is: +" + thePrediction);
-		
+//		Sequence sequence = new Sequence(0);
+//		sequence.addItem(new Item(1));
+//		sequence.addItem(new Item(4));
+//
+//		// Then we perform the prediction
+//		Sequence thePrediction = predictionModel.Predict(sequence);
+//		System.out.println("For the sequence <(1),(4)>, the prediction for the next symbol is: +" + thePrediction);
+
+
 //		// ======================== OPTIONAL ==============================================
 //		// *******  IF we want to save the trained model to a file ******* ///
 //		ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream("model.ser"));
