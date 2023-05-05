@@ -1,8 +1,6 @@
 package ca.pfv.spmf.Converter;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -22,13 +20,13 @@ public class Main {
 //        }
 //        while (!readData.equals("exit"));
 
-        var randomLines = Converter.getRandomLinesFromFile(1000, 4, 10, "C:\\Users\\1\\Desktop\\FIFA.txt");
+        var randomLines = Helper.getRandomLinesFromFile(50, 10, 50, 50,"C:\\Users\\1\\IdeaProjects\\SPMF\\src\\ca\\pfv\\spmf\\Converter\\Data\\TRACK_HISTORY.txt");
 //        randomLines = Converter.convertSPMFToNormalFormat(randomLines);
 //
         for (var line : randomLines) {
             System.out.println(line);
         }
 
-        Converter.writeFile(randomLines, "C:\\Users\\1\\Desktop\\FIFA_TEST.txt");
+        Helper.writeFile(randomLines, "C:\\Users\\1\\IdeaProjects\\SPMF\\src\\ca\\pfv\\spmf\\Converter\\Data\\TRACK_HISTORY_TEST.txt");
     }
 }

@@ -10,7 +10,7 @@ public class NameDatabase {
 
     public NameDatabase(String nameDatabasePath) throws FileNotFoundException {
         var file = new File(nameDatabasePath);
-        var nameDatabase = Converter.readFile(file);
+        var nameDatabase = Helper.readFile(file);
         this.database = convertData(nameDatabase);
         this.invertedDatabase = reverseHashTable(database);
     }

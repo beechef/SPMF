@@ -3,11 +3,8 @@ package ca.pfv.spmf.test;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
-import java.util.Map;
-import java.util.Map.Entry;
 
-import ca.pfv.spmf.Converter.Converter;
-import ca.pfv.spmf.algorithms.sequenceprediction.ipredict.database.Item;
+import ca.pfv.spmf.Converter.Helper;
 import ca.pfv.spmf.algorithms.sequenceprediction.ipredict.database.Sequence;
 import ca.pfv.spmf.algorithms.sequenceprediction.ipredict.database.SequenceDatabase;
 import ca.pfv.spmf.algorithms.sequenceprediction.ipredict.database.SequenceStatsGenerator;
@@ -22,7 +19,8 @@ public class MainTestCPTPlus {
     public static void main(String[] arg) throws IOException, ClassNotFoundException {
 
         // Load the set of training sequences
-        String inputPath = fileToPath("contextCPT.txt");
+        String inputPath = Helper.DATA_PATH;
+
         SequenceDatabase trainingSet = new SequenceDatabase();
         trainingSet.loadFileSPMFFormat(inputPath, Integer.MAX_VALUE, 0, Integer.MAX_VALUE);
 
@@ -39,7 +37,7 @@ public class MainTestCPTPlus {
         // The following line is to set optional parameters for the prediction model.
         // We want to
         // activate the CCF and CBS strategies which generally improves its performance (see paper)
-        String optionalParameters = "CCF:true CBS:true CCFmin:3 CCFmax:3 CCFsup:5 splitMethod:5 splitLength:4 minPredictionRatio:1 noiseRatio:1.0";
+        String optionalParameters = "CCF:false CBS:true CCFmin:3 CCFmax:3 CCFsup:5 splitMethod:1 splitLength:30 minPredictionRatio:0 noiseRatio:0.1";
         // Here is a brief description of the parameter used in the above line:
         //  CCF:true  --> activate the CCF strategy
         //  CBS:true -->  activate the CBS strategy
@@ -52,10 +50,10 @@ public class MainTestCPTPlus {
 
         // Train the prediction model
         CPTPlusPredictor predictionModel = new CPTPlusPredictor("CPT+", optionalParameters);
-        var lines = Converter.readFile("C:\\Users\\1\\Desktop\\BIKE_TEST.txt");
-        var sequenceAndResults = Converter.linesToSequences(lines);
+        var lines = Helper.readFile(Helper.TEST_PATH);
+        var sequenceAndResults = Helper.linesToSequences(lines);
 
-        Converter.trainAndPredict(predictionModel, trainingSet.getSequences(),sequenceAndResults);
+        Helper.trainAndPredict(predictionModel, trainingSet.getSequences(),sequenceAndResults);
 
         // Now we will make a prediction.
         // We want to predict what would occur after the sequence <1, 2>.

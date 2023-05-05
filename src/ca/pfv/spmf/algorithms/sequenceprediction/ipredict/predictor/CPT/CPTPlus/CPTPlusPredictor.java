@@ -252,7 +252,7 @@ public class CPTPlusPredictor extends Predictor implements Serializable{
 		
 			
 			//if this sequence has not been seen yet
-			if(seen.contains(seq) == false) {
+			if(!seen.contains(seq)) {
 			
 				//set this sequence to seen
 				seen.add(seq);

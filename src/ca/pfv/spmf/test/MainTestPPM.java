@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 
-import ca.pfv.spmf.Converter.Converter;
-import ca.pfv.spmf.algorithms.sequenceprediction.ipredict.database.Item;
+import ca.pfv.spmf.Converter.Helper;
 import ca.pfv.spmf.algorithms.sequenceprediction.ipredict.database.Sequence;
 import ca.pfv.spmf.algorithms.sequenceprediction.ipredict.database.SequenceDatabase;
 import ca.pfv.spmf.algorithms.sequenceprediction.ipredict.database.SequenceStatsGenerator;
@@ -20,7 +19,8 @@ public class MainTestPPM {
 	public static void main(String [] arg) throws IOException, ClassNotFoundException{
 		
 		// Load the set of training sequences
-		String inputPath = fileToPath("contextCPT.txt");  
+		String inputPath = Helper.DATA_PATH;
+
 		SequenceDatabase trainingSet = new SequenceDatabase();
 		trainingSet.loadFileSPMFFormat(inputPath, Integer.MAX_VALUE, 0, Integer.MAX_VALUE);
 		
@@ -36,10 +36,11 @@ public class MainTestPPM {
 		
 		// Train the prediction model
 		MarkovFirstOrderPredictor predictionModel = new MarkovFirstOrderPredictor("PPM");
-		var lines = Converter.readFile("C:\\Users\\1\\Desktop\\FIFA_TEST.txt");
-		var sequenceAndResults = Converter.linesToSequences(lines);
+		var lines = Helper.readFile(Helper.TEST_PATH);
 
-		Converter.trainAndPredict(predictionModel, trainingSet.getSequences(),sequenceAndResults);
+		var sequenceAndResults = Helper.linesToSequences(lines);
+
+		Helper.trainAndPredict(predictionModel, trainingSet.getSequences(),sequenceAndResults);
 		
 		// Now we will make a prediction.
 		// We want to predict what would occur after the sequence <1, 3>.

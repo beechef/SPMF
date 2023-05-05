@@ -3,11 +3,8 @@ package ca.pfv.spmf.test;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
-import java.util.Map;
-import java.util.Map.Entry;
 
-import ca.pfv.spmf.Converter.Converter;
-import ca.pfv.spmf.algorithms.sequenceprediction.ipredict.database.Item;
+import ca.pfv.spmf.Converter.Helper;
 import ca.pfv.spmf.algorithms.sequenceprediction.ipredict.database.Sequence;
 import ca.pfv.spmf.algorithms.sequenceprediction.ipredict.database.SequenceDatabase;
 import ca.pfv.spmf.algorithms.sequenceprediction.ipredict.database.SequenceStatsGenerator;
@@ -22,7 +19,8 @@ public class MainTestCPT {
 	public static void main(String [] arg) throws IOException, ClassNotFoundException{
 		
 		// Load the set of training sequences
-		String inputPath = fileToPath("contextCPT.txt");  
+		String inputPath = Helper.DATA_PATH;
+
 		SequenceDatabase trainingSet = new SequenceDatabase();
 		trainingSet.loadFileSPMFFormat(inputPath, Integer.MAX_VALUE, 0, Integer.MAX_VALUE);
 		
@@ -40,7 +38,7 @@ public class MainTestCPT {
 		// We can activate the recursive divider strategy to obtain more noise
 		// tolerant predictions (see paper). We can also use a splitting method
 		// to reduce the model size (see explanation below).
-		String optionalParameters = "splitLength:4 splitMethod:6 recursiveDividerMin:1 recursiveDividerMax:5";
+		String optionalParameters = "splitLength:6 splitMethod:1 recursiveDividerMin:1 recursiveDividerMax:4";
 		
 		// An explanation about "splitMethod":
 		// - If we set splitMethod to 0, then each sequence will be completely used
@@ -54,10 +52,10 @@ public class MainTestCPT {
 		// Train the prediction model
 		CPTPredictor predictionModel = new CPTPredictor("CPT", optionalParameters);
 
-		var lines = Converter.readFile("C:\\Users\\1\\Desktop\\BIKE_TEST.txt");
-		var sequenceAndResults = Converter.linesToSequences(lines);
+		var lines = Helper.readFile(Helper.TEST_PATH);
+		var sequenceAndResults = Helper.linesToSequences(lines);
 
-		Converter.trainAndPredict(predictionModel, trainingSet.getSequences(),sequenceAndResults);
+		Helper.trainAndPredict(predictionModel, trainingSet.getSequences(),sequenceAndResults);
 		// Now we will use the prediction model that we have trained to make a prediction.
 		// We want to predict what would occur after the sequence <1, 4>.
 		// We first create the sequence
